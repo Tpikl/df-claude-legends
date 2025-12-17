@@ -1,4 +1,4 @@
-# The Dark Apprenticeship of Etur Rawshoots
+# Details of Etur Rawshoots
 
 *A Chronicle of Corruption in The Plane of Dragons*
 
