@@ -84,3 +84,53 @@ python3 scripts/parse_legends.py
 3. Cross-reference IDs between files (e.g., figure's entity_link → entities file)
 4. Transform historical records into readable narrative
 5. Store output in `stories/{subject}/`
+
+### Story Output Structure
+Each story folder should contain two files:
+- `outline.md` - Structural reference with facts, timelines, family trees, skill stats, and source citations
+- `story.md` - Creative narrative with embellished prose and character dialog
+
+### Lessons Learned
+
+#### Creature Name Lookups
+Generated creatures (night creatures, forgotten beasts, titans) have IDs like `NIGHT_CREATURE_3`. Look up their actual names in `parsed/reference/creature_raw.xml`:
+- `NIGHT_CREATURE_3` → "monster of shadow"
+- `NIGHT_CREATURE_4` → "hag of shadow"
+- Search for `<creature_id>NIGHT_CREATURE_X</creature_id>` to find `<name_singular>`
+
+#### Transformation Events
+For vampire/werewolf/curse stories, `parsed/events/by_type/changed_creature_type.xml` is essential. It shows:
+- Who transformed whom (`changer_hfid` → `changee_hfid`)
+- Original and new race
+- Exact year and time
+
+#### Family Relationships
+The `<hf_link>` tags in figure files define relationships:
+- `<link_type>mother</link_type>` / `father` / `child`
+- `<link_type>spouse</link_type>` / `former spouse`
+- `<link_type>deity</link_type>` (worship relationships)
+
+**Caution:** Trace relationships carefully. A figure's `former spouse` may have children with them listed separately.
+
+#### Skills Inform Character Voice
+Use skill values to shape dialog and personality:
+- High `PERSUASION`/`NEGOTIATION` → diplomatic speech patterns
+- High craft skills (`FORGE_ARMOR`, `PAPERMAKING`) → devotion to craft in dialog
+- High combat skills → confident, predatory demeanor
+- High `LYING`/`JUDGING_INTENT` → manipulative or perceptive character
+
+#### Timeline Verification
+**Always verify ages and dates before writing.** Common calculation:
+- Figure's age at event = `event_year - birth_year`
+- Years since transformation = `current_year - transformation_year`
+
+Write the outline with verified dates first, then reference it while writing the narrative.
+
+#### Narrative Immersion
+When writing stories, translate raw IDs to narrative-friendly text:
+- "Entity 32" → "the human settlement" or use site name
+- "Deity 44" → "his god" or "the god of craft" (check deity's spheres)
+- "Site 69" → use the site's actual name from sites.xml
+
+#### Lair and Site Lookups
+Figures often have `<site_link><link_type>lair</link_type>` pointing to their home. Cross-reference with `parsed/entities/sites.xml` to get the lair's name and type.
